@@ -72,8 +72,13 @@ public class DefaultController {
     @GetMapping("/updateQuestionPool/{id}")
     public String updateQuestionPool(@PathVariable(value = "id") Long id, Model model) {
         List<Question> questionList = questionService.searchQuestion(id);
-        model.addAttribute("questionList",questionList);
+        model.addAttribute("questionList", questionList);
         return "updateQuestionPool";
+    }
+
+    @GetMapping("/updateQuestion/{id}")
+    public String updateQuestion(@PathVariable(value = "id") Long id) {
+        return "redirect:/index";
     }
 
     @GetMapping("/new_user")
