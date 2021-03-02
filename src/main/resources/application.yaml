@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/interviewer
+    username: postgres
+    password: 12345678
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
+    show-sql: true
+spring.jpa.properties.hibernate.format_sql: true
+
+
+
+#hibernate:
+#  dialect: org.hibernate.dialect.MySQLDialect
+
+
+#spring.jpa.show-sql: true
+#spring.jpa.properties.hibernate.format_sql: true
+#spring.jpa.hibernate.ddl-auto: update
