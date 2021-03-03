@@ -17,13 +17,12 @@ import java.util.List;
 
 @Controller
 public class DefaultController {
-    private final UserServiceImpl userService;
+
     private final QuestionPoolServiceImpl questionPoolService;
     private final QuestionServiceImpl questionService;
 
     @Autowired
-    public DefaultController(UserServiceImpl userService, QuestionPoolServiceImpl questionPoolService, QuestionServiceImpl questionService) {
-        this.userService = userService;
+    public DefaultController(QuestionPoolServiceImpl questionPoolService, QuestionServiceImpl questionService) {
         this.questionPoolService = questionPoolService;
         this.questionService = questionService;
     }
@@ -64,7 +63,6 @@ public class DefaultController {
 
     @PostMapping("/saveQuestion")
     public String saveNewQuestion(Question question) {
-//        System.out.println(question);
         questionService.saveQuestion(question);
         return "redirect:/index";
     }
@@ -79,19 +77,6 @@ public class DefaultController {
     @GetMapping("/updateQuestion/{id}")
     public String updateQuestion(@PathVariable(value = "id") Long id) {
         return "redirect:/index";
-    }
-
-    @GetMapping("/new_user")
-    public String newUser(Model model) {
-        Users users = new Users();
-        model.addAttribute("userItem", users);
-        return "new_user";
-    }
-
-    @PostMapping("/saveNewUser")
-    public String saveUser(Users users) {
-        userService.saveUsers(users);
-        return "redirect:/new_user";
     }
 
 }
