@@ -26,7 +26,22 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.save(question);
     }
 
-    public List<Question> searchQuestion(Long id){
-       return questionRepository.findByQuestionPoolId(id);
+    public List<Question> searchQuestion(Long id) {
+        return questionRepository.findByQuestionPoolId(id);
+    }
+
+    public Question getQuestionById(Long id) {
+        return questionRepository.findById(id).orElseThrow();
+    }
+
+    public void update(Question questionUpd) {
+        Question question = getQuestionById(questionUpd.getId());
+        question.setQuestionName(questionUpd.getQuestionName());
+        question.setAnswerOne(questionUpd.getAnswerOne());
+        question.setAnswerTwo(questionUpd.getAnswerTwo());
+        question.setAnswerThree(questionUpd.getAnswerThree());
+        question.setAnswerFour(questionUpd.getAnswerFour());
+        question.setTrueQuestion(questionUpd.getTrueQuestion());
+        questionRepository.save(question);
     }
 }

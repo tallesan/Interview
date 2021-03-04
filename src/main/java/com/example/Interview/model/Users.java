@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -21,9 +21,9 @@ public class Users {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Email
     private String email;
     private String password;
-
+    @ManyToMany
+    private List<AnswerUser> answerUsers;
 
 }

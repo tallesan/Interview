@@ -1,9 +1,7 @@
 package com.example.Interview.controllers;
 
 import com.example.Interview.dao.UserDao;
-import com.example.Interview.model.Users;
 import com.example.Interview.service.Impl.UserServiceImpl;
-import com.example.Interview.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
