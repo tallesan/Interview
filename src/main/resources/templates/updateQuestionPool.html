@@ -11,8 +11,6 @@
 <div class="container my-2">
     <br>
     <h1>Список вопросов(<span th:text="${questionList.size()}">0</span>)</h1>
-    <a th:href="@{/addQuestionPool}" class="btn btn-primary btn-sm mb-3">Добавить запись</a>
-    <a th:href="@{/deleteAll}" class="btn btn-danger btn-sm mb-3">Удалить все записи </a>
     <table border="1" class="table table-striped table-responsive-md">
         <thead>
         <tr>
@@ -22,7 +20,7 @@
             <th>Второй ответ</th>
             <th>Третий ответ</th>
             <th>Четвертый ответ</th>
-            <th>Правельный ответ</th>
+            <th>Правильный ответ</th>
             <th>Действие</th>
 
         </tr>

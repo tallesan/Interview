@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Списко опросов</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+<form action="#" class="form-horizontal" th:action="@{/test/userAnswer}" th:object="${userAnswerDto}" method="post">
+    <fieldset>
+    <h1>Список вопросов(<span th:text="${questionDaoList.size()}">0</span>)</h1>
+    <table border="1" class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>Вопрос</th>
+            <th>Ответ</th>
+            <th>ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="answerUser, itemStat : *{getAnswerUsers()}">
+            <td th:text="${questionDaoList[__${itemStat.index}__].getQuestionName()}"></td>
+            <td><select th:field="*{answerUsers[__${itemStat.index}__].answer}" class="form-control mb-4 col-4" >
+                <option th:each="answerDao : ${questionDaoList[__${itemStat.index}__].getAnswers()}"
+                        th:value="${answerDao}"
+                        th:text="${answerDao}">
+                </option>
+                </select>
+                <input type="hidden" name="trueAnswer" th:field="*{answerUsers[__${itemStat.index}__].trueAnswerBool}" th:value="${questionDaoList[__${itemStat.index}__].getTrueQuestion()}">
+
+            </td>
+
+<!--            <td th:text="${questionDaoList[__${itemStat.index}__].getTrueQuestion()}"></td>-->
+                <td><input type="hidden" th:field="*{answerUsers[__${itemStat.index}__].questionId}" th:text="${questionDaoList[__${itemStat.index}__].id}"></td>
+<!--            th:field="*{answerUsers[__${itemStat.index}__].trueAnswerBool}" th:value="${questionDaoList[__${itemStat.index}__].getTrueQuestion()}"-->
+<!--            th:value="${questionDaoList[__${itemStat.index}__].getId()}"-->
+
+        </tr>
+        </tbody>
+    </table>
+    </fieldset>
+    <input type="submit" id="submitButton" th:value="Ответ" class="btn btn-info col-2">
+</form>
+</body>
+</html>

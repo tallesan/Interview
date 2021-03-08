@@ -2,14 +2,11 @@ package com.example.Interview.controllers;
 
 import com.example.Interview.model.Question;
 import com.example.Interview.model.QuestionPool;
-import com.example.Interview.model.Users;
 import com.example.Interview.service.Impl.QuestionPoolServiceImpl;
 import com.example.Interview.service.Impl.QuestionServiceImpl;
-import com.example.Interview.service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,13 +75,11 @@ public class DefaultController {
     @GetMapping("/updateQuestion/{id}")
     public String updateQuestion(@PathVariable(value = "id") Long id, Model model) {
         Question question = questionService.getQuestionById(id);
-        System.out.println(question);
         model.addAttribute("question",question);
         return "updateQuestion";
     }
     @PostMapping("/updateQuestionId")
     public String updateQuestionId(Question question){
-        System.out.println(question);
         questionService.update(question);
         return "redirect:/index";
     }
