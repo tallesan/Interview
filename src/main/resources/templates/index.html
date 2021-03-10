@@ -9,7 +9,9 @@
 </head>
 <body>
 <div class="container my-2">
-  <br>
+  <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+    <button class="btn btn-outline-success my-2 my-sm-0">Выйти</button>
+  </form>
   <h1>Список опросов(<span th:text="${questionPoolList.size()}">0</span>)</h1>
   <a th:href="@{/addQuestionPool}" class="btn btn-primary btn-sm mb-3">Добавить запись</a>
   <a th:href="@{/deleteAll}" class="btn btn-danger btn-sm mb-3">Удалить все записи </a>

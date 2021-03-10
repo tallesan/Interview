@@ -20,4 +20,5 @@ public class AnswerUser {
     private Boolean trueAnswer;
     @ManyToOne
     private Question question;
+
 }

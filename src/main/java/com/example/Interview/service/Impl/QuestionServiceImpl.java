@@ -4,21 +4,23 @@ import com.example.Interview.dao.QuestionDao;
 import com.example.Interview.model.Question;
 import com.example.Interview.model.QuestionPool;
 import com.example.Interview.repository.QuestionRepository;
+import com.example.Interview.repository.UsersRepository;
 import com.example.Interview.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
+    private final UsersRepository usersRepository;
 
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, UsersRepository usersRepository) {
         this.questionRepository = questionRepository;
+        this.usersRepository = usersRepository;
     }
 
     public void saveListQuestion(List<Question> questions, QuestionPool questionPool) {
@@ -48,17 +50,19 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.save(question);
     }
 
-    public QuestionDao convertQuestionToDao(Question question) {
+
+    public QuestionDao convertQuestionToDao(Question question, String userName) {
         QuestionDao questionDao = new QuestionDao();
         questionDao.setId(question.getId());
         questionDao.setQuestionName(question.getQuestionName());
         questionDao.setQuestionPool(question.getQuestionPool());
         questionDao.setTrueQuestion(question.getTrueQuestion());
         questionDao.setAnswers(List.of(question.getAnswerOne(), question.getAnswerTwo(), question.getAnswerThree(), question.getAnswerFour()));
+        questionDao.setUsers(usersRepository.findByEmail(userName).get());
         return questionDao;
     }
 
-    public List<QuestionDao> convertQuestionDaoList(List<Question> questions) {
-        return questions.stream().map(this::convertQuestionToDao).collect(Collectors.toList());
+    public List<QuestionDao> convertQuestionDaoList(List<Question> questions, String userName) {
+        return questions.stream().map((Question question) -> convertQuestionToDao(question ,userName)).collect(Collectors.toList());
     }
 }

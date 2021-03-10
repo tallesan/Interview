@@ -8,40 +8,53 @@
 
 </head>
 <body>
-<form action="#" class="form-horizontal" th:action="@{/test/userAnswer}" th:object="${userAnswerDto}" method="post">
+<
+<div class="container">
+    <form class="form-inline my-2 my-lg-0" align="left" th:action="@{/logout}" method="post">
+        <button class="btn btn-outline-success my-2 my-sm-0">Выйти</button>
+    </form>
+<form action="#" class="form-group col-md-10" align="center" th:action="@{/test/userAnswer}" th:object="${answersToQuestions}"
+      method="post">
     <fieldset>
-    <h1>Список вопросов(<span th:text="${questionDaoList.size()}">0</span>)</h1>
-    <table border="1" class="table table-striped table-responsive-md">
-        <thead>
-        <tr>
-            <th>Вопрос</th>
-            <th>Ответ</th>
-            <th>ID</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="answerUser, itemStat : *{getAnswerUsers()}">
-            <td th:text="${questionDaoList[__${itemStat.index}__].getQuestionName()}"></td>
-            <td><select th:field="*{answerUsers[__${itemStat.index}__].answer}" class="form-control mb-4 col-4" >
-                <option th:each="answerDao : ${questionDaoList[__${itemStat.index}__].getAnswers()}"
-                        th:value="${answerDao}"
-                        th:text="${answerDao}">
-                </option>
+        <h1>Список вопросов(<span th:text="${answersToQuestions.getAnswersToDao().size()}">0</span>)</h1>
+        <table border="1" class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Вопрос</th>
+                <th>Ответ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="users, itemStat : ${answersToQuestions.answersToDao}">
+                <td th:text="${answersToQuestions.answersToDao[__${itemStat.index}__].getQuestionName()}">
+
+                <td><select th:field="*{answersToDao[__${itemStat.index}__].answerUser}"
+                            class="form-control mb-6 col-6">
+                    <option th:each="answerDao : ${answersToQuestions.answersToDao[__${itemStat.index}__].answers}"
+                            th:value="${answerDao}"
+                            th:text="${answerDao}">
+                    </option>
                 </select>
-                <input type="hidden" name="trueAnswer" th:field="*{answerUsers[__${itemStat.index}__].trueAnswerBool}" th:value="${questionDaoList[__${itemStat.index}__].getTrueQuestion()}">
-
-            </td>
-
-<!--            <td th:text="${questionDaoList[__${itemStat.index}__].getTrueQuestion()}"></td>-->
-                <td><input type="hidden" th:field="*{answerUsers[__${itemStat.index}__].questionId}" th:text="${questionDaoList[__${itemStat.index}__].id}"></td>
-<!--            th:field="*{answerUsers[__${itemStat.index}__].trueAnswerBool}" th:value="${questionDaoList[__${itemStat.index}__].getTrueQuestion()}"-->
-<!--            th:value="${questionDaoList[__${itemStat.index}__].getId()}"-->
-
-        </tr>
-        </tbody>
-    </table>
+                <input type="hidden" th:field="*{answersToDao[__${itemStat.index}__].id}"
+                       th:value="${answersToQuestions.answersToDao[__${itemStat.index}__].id}">
+                <input type="hidden" th:field="*{answersToDao[__${itemStat.index}__].questionName}"
+                       th:value="${answersToQuestions.answersToDao[__${itemStat.index}__].questionName}">
+                <input type="hidden" th:field="*{answersToDao[__${itemStat.index}__].answers}"
+                       th:value="${answersToQuestions.answersToDao[__${itemStat.index}__].answers}">
+                <input type="hidden" th:field="*{answersToDao[__${itemStat.index}__].trueQuestion}"
+                       th:value="${answersToQuestions.answersToDao[__${itemStat.index}__].trueQuestion}">
+                <input type="hidden" th:field="*{answersToDao[__${itemStat.index}__].questionPool}"
+                       th:value="${answersToQuestions.answersToDao[__${itemStat.index}__].questionPool}">
+                <input type="hidden" th:field="*{answersToDao[__${itemStat.index}__].users}"
+                       th:value="${answersToQuestions.answersToDao[__${itemStat.index}__].users}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </fieldset>
     <input type="submit" id="submitButton" th:value="Ответ" class="btn btn-info col-2">
 </form>
+    <a th:href="@{/test/take}">назад к списку</a>
+</div>
 </body>
 </html>

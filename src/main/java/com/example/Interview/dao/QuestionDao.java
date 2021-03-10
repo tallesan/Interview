@@ -1,14 +1,15 @@
 package com.example.Interview.dao;
 
 import com.example.Interview.model.QuestionPool;
+import com.example.Interview.model.Users;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class QuestionDao {
     private Long id;
@@ -16,4 +17,6 @@ public class QuestionDao {
     private List<String> answers;
     private String trueQuestion;
     private QuestionPool questionPool;
+    private String answerUser;
+    private Users users;
 }
