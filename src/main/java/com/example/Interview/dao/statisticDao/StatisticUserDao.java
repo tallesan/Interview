@@ -1,13 +1,14 @@
-package com.example.Interview.dao;
+package com.example.Interview.dao.statisticDao;
 
-import com.example.Interview.model.Users;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class StatisticUserDao {
-    private Users users;
+    private List<StatisticUserAnswer> statisticUserAnswers;
 }
