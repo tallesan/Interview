@@ -37,6 +37,7 @@ public class UserTestingController {
 
     @GetMapping("/test/selectQuestion/{id}")
     public String selectQuestion(@PathVariable(value = "id") Long id, Model model, Principal principal) {
+        System.out.println(principal.getName());
         List<QuestionDao> questionDaoList = questionService.convertQuestionDaoList(questionService.searchQuestion(id), principal.getName());
         AnswersToQuestions answersToQuestions = new AnswersToQuestions();
         answersToQuestions.setAnswersToDao(questionDaoList);

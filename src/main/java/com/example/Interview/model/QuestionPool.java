@@ -18,6 +18,6 @@ public class QuestionPool {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Question> question;
 }

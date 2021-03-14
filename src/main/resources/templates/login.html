@@ -16,24 +16,11 @@
 
         <input type="text" class="form-control mb-4 col-4" id="username" name="username" placeholder="Введите имя пользователя">
         <input type="password" class="form-control mb-4 col-4" id="password" name="password" placeholder="Введите пароль">
-
-        <!--    <select class="form-control mb-4 col-4" th:field="*{position}" id="active">-->
-        <!--      <option  th:each="pos : ${listPos}"-->
-        <!--               th:value="${pos}"-->
-        <!--               th:text="${pos.getPos()}"></option>-->
-        <!--    </select>-->
-
-<!--        <input type="text" th:field="*{email}" placeholder="Почта" class="form-control mb-4 col-4">-->
-
-<!--        <input type="text" th:field="*{password}" placeholder="Пароль" class="form-control mb-4 col-4">-->
-
-
         <button type="submit" class="btn btn-info col-2">Login</button>
         <a class="px-3" th:href="@{/registr}">Зарегистрироваться</a>
     </form>
 
     <hr>
-    <!--  <a th:href="@{/}">назад к списку</a>-->
 </div>
 </body>
 </html>

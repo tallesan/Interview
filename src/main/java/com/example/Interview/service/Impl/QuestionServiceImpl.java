@@ -4,7 +4,7 @@ import com.example.Interview.dao.QuestionDao;
 import com.example.Interview.model.Question;
 import com.example.Interview.model.QuestionPool;
 import com.example.Interview.repository.QuestionRepository;
-import com.example.Interview.repository.UsersRepository;
+import com.example.Interview.repository.UserRepository;
 import com.example.Interview.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository, UsersRepository usersRepository) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, UserRepository userRepository) {
         this.questionRepository = questionRepository;
-        this.usersRepository = usersRepository;
+        this.userRepository = userRepository;
     }
 
     public void saveListQuestion(List<Question> questions, QuestionPool questionPool) {
@@ -58,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
         questionDao.setQuestionPool(question.getQuestionPool());
         questionDao.setTrueQuestion(question.getTrueQuestion());
         questionDao.setAnswers(List.of(question.getAnswerOne(), question.getAnswerTwo(), question.getAnswerThree(), question.getAnswerFour()));
-        questionDao.setUsers(usersRepository.findByEmail(userName).get());
+        questionDao.setUsers(userRepository.getUserByEmail(userName));
         return questionDao;
     }
 
