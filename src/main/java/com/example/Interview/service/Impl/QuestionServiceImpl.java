@@ -55,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
         QuestionDao questionDao = new QuestionDao();
         questionDao.setId(question.getId());
         questionDao.setQuestionName(question.getQuestionName());
-        questionDao.setQuestionPool(question.getQuestionPool());
+        questionDao.setQuestionPoolId(question.getQuestionPoolId());
         questionDao.setTrueQuestion(question.getTrueQuestion());
         questionDao.setAnswers(List.of(question.getAnswerOne(), question.getAnswerTwo(), question.getAnswerThree(), question.getAnswerFour()));
         questionDao.setUsers(userRepository.getUserByEmail(userName));

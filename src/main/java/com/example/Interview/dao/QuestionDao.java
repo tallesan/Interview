@@ -16,7 +16,7 @@ public class QuestionDao {
     private String questionName;
     private List<String> answers;
     private String trueQuestion;
-    private QuestionPool questionPool;
+    private Long questionPoolId;
     private String answerUser;
     private Users users;
 }

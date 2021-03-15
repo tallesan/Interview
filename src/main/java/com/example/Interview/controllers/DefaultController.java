@@ -52,10 +52,12 @@ public class DefaultController {
 
     @GetMapping("/addQuestion/{id}")
     public String addQuestion(@PathVariable(value = "id") Long id, Model model) {
+        QuestionPool questionPool = questionPoolService.getQuestionPoolById(id);
         Question question = new Question();
-        question.setQuestionPool(questionPoolService.getQuestionPoolById(id));
+//        question.setQuestionPoolId(questionPool.getId());
+        model.addAttribute("questionPool",questionPool);
         model.addAttribute("question", question);
-        model.addAttribute("questionP", questionPoolService.getQuestionPoolById(id));
+//        model.addAttribute("questionP", questionPoolService.getQuestionPoolById(id));
         return "addQuestion";
     }
 
@@ -75,6 +77,9 @@ public class DefaultController {
     @GetMapping("/updateQuestion/{id}")
     public String updateQuestion(@PathVariable(value = "id") Long id, Model model) {
         Question question = questionService.getQuestionById(id);
+        QuestionPool questionPool = questionPoolService.getQuestionPoolById(question.getQuestionPoolId());
+        question.setQuestionPoolId(id);
+        model.addAttribute("questionPool",questionPool);
         model.addAttribute("question",question);
         return "updateQuestion";
     }

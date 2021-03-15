@@ -21,6 +21,6 @@ public class Question {
     private String answerThree;
     private String answerFour;
     private String trueQuestion;
-    @ManyToOne
-    private QuestionPool questionPool;
+//    @ManyToOne
+    private Long questionPoolId;
 }
