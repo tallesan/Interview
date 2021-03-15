@@ -3,6 +3,7 @@ package com.example.Interview.controllers.api;
 import com.example.Interview.Dto.QuestionPoolDto;
 import com.example.Interview.dao.UserDao;
 import com.example.Interview.model.QuestionPool;
+import com.example.Interview.model.Users;
 import com.example.Interview.repository.QuestionsPoolRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,16 @@ public class QuestionPoolApiController {
         }
         questionsPoolRepository.updateQuestionPool(questionPoolDto);
         return new ResponseEntity<>(questionPoolDto, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    public ResponseEntity<?> deleteQuestionPool(@PathVariable(value = "id") Long id) {
+        QuestionPoolDto questionPoolDto = questionsPoolRepository.findQuestionPoolById(id);
+        if (questionPoolDto == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        questionsPoolRepository.deleteQuestionPoolById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

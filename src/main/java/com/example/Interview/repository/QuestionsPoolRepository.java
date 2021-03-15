@@ -63,12 +63,24 @@ public class QuestionsPoolRepository {
     }
 
     public void updateQuestionPool(QuestionPool questionPool) {
-
         String sql = "update question_pool set id=?, description=? where id=?";
         jdbcTemplate.update(sql, questionPool.getId(), questionPool.getDescription(), questionPool.getId());
         for (Question questionDto : questionPool.getQuestion()) {
             String sqlQuestion = "update question set id=?,answer_one=?, answer_two=?, answer_three=?, answer_four=?, question_name=?, true_question=?, question_pool_id=? where id=?";
-            jdbcTemplate.update(sqlQuestion, questionDto.getId(), questionDto.getAnswerOne(), questionDto.getAnswerTwo(), questionDto.getAnswerThree(), questionDto.getAnswerFour(), questionDto.getQuestionName(), questionDto.getTrueQuestion(), questionDto.getQuestionPool().getId(), questionDto.getId());
+            jdbcTemplate.update(sqlQuestion, questionDto.getId(), questionDto.getAnswerOne(), questionDto.getAnswerTwo(), questionDto.getAnswerThree(), questionDto.getAnswerFour(), questionDto.getQuestionName(), questionDto.getTrueQuestion(), questionPool.getId(), questionDto.getId());
+        }
+    }
+
+    public void deleteQuestionPoolById(Long id) {
+        QuestionPoolDto questionPoolDto = findQuestionPoolById(id);
+        if (questionPoolDto != null) {
+            if (questionPoolDto.getQuestion().size() != 0) {
+                for (QuestionDto question : questionPoolDto.getQuestion()) {
+                    jdbcTemplate.update("delete from answer_user where question_id=?",question.getId());
+                    jdbcTemplate.update("delete from question where question_pool_id=?", id);
+                }
+            }
+            jdbcTemplate.update("delete from question_pool where id=?", id);
         }
     }
 }
