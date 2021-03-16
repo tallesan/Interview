@@ -1,16 +1,25 @@
 package com.example.Interview.service.Impl;
 
+import com.example.Interview.Dto.QuestionDto;
 import com.example.Interview.Dto.QuestionPoolDto;
+import com.example.Interview.model.Question;
 import com.example.Interview.model.QuestionPool;
 import com.example.Interview.repository.QuestionsPoolRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class QuestionPoolServiceJdbc {
     private final QuestionsPoolRepository questionsPoolRepository;
+    private final QuestionServiceJdbc questionServiceJdbc;
 
-    public QuestionPoolServiceJdbc(QuestionsPoolRepository questionsPoolRepository) {
+
+    public QuestionPoolServiceJdbc(QuestionsPoolRepository questionsPoolRepository, QuestionServiceJdbc questionServiceJdbc) {
         this.questionsPoolRepository = questionsPoolRepository;
+        this.questionServiceJdbc = questionServiceJdbc;
     }
 
     public QuestionPool convertToQuestionPool(QuestionPoolDto questionPoolDto) {
@@ -26,4 +35,45 @@ public class QuestionPoolServiceJdbc {
         questionPoolDto.setDescription(questionPool.getDescription());
         return questionPoolDto;
     }
+
+    public List<QuestionPoolDto> findAllQuestionPool() {
+        List<QuestionPoolDto> questionPooDtoList = questionsPoolRepository.findAllQuestionPool();
+        for (QuestionPoolDto questionPooldto : questionPooDtoList) {
+            questionPooldto.setQuestion(questionServiceJdbc.findQuestionsDtoByQuestionPoolId(questionPooldto.getId()));
+        }
+        return questionPooDtoList;
+    }
+
+    public QuestionPoolDto findQuestionPoolDtoById(Long id) {
+        QuestionPoolDto questionPoolDto = questionsPoolRepository.findQuestionPoolById(id);
+
+        questionPoolDto.setQuestion(questionServiceJdbc.findQuestionsDtoByQuestionPoolId(questionPoolDto.getId()));
+        return questionPoolDto;
+    }
+
+    public QuestionPoolDto createQuestionPool(QuestionPoolDto questionPoolDtoSave) {
+        QuestionPoolDto questionPoolDto = questionsPoolRepository.createQuestionPool(questionPoolDtoSave);
+        if (questionPoolDto.getQuestion() != null) {
+            questionPoolDto.setQuestion(questionServiceJdbc.saveQuestionDto(questionPoolDtoSave.getQuestion(), questionPoolDto.getId()));
+        }
+        return questionPoolDto;
+    }
+
+    public void updateQuestionPoll(QuestionPoolDto questionPoolDto) {
+        questionsPoolRepository.updateQuestionPool(questionPoolDto);
+        if (questionPoolDto.getQuestion() != null) {
+            questionServiceJdbc.updateQuestionDto(questionPoolDto.getQuestion());
+        }
+    }
+
+    public void deleteQuestionPoolById(Long id) {
+        QuestionPoolDto questionPoolDto = findQuestionPoolDtoById(id);
+        if (questionPoolDto != null) {
+            if (questionPoolDto.getQuestion() != null) {
+                questionServiceJdbc.deleteQuestionByQuestionPoolId(questionPoolDto.getQuestion(), id);
+            }
+            questionsPoolRepository.deleteQuestionPoolById(id);
+        }
+    }
+
 }

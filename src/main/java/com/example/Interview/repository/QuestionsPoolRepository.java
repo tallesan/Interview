@@ -14,21 +14,15 @@ import java.util.List;
 @Repository
 public class QuestionsPoolRepository {
     private final JdbcTemplate jdbcTemplate;
+
     @Autowired
     public QuestionsPoolRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<QuestionPoolDto> findAllQuestionPool() {
-        String sql = "select * from question_pool qp join question q on qp.id = q.question_pool_id";
-        String questionSql = "select * from question where question_pool_id =?";
-        List<QuestionPoolDto> questionPoolDtoList = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(QuestionPoolDto.class));
-        questionPoolDtoList.forEach(questionPoolDto -> questionPoolDto
-                .setQuestion(jdbcTemplate.query(questionSql,
-                        new Object[]{questionPoolDto.getId()},
-                        new BeanPropertyRowMapper<>(QuestionDto.class))));
-        return questionPoolDtoList;
+        String sql = "select * from question_pool";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(QuestionPoolDto.class));
     }
 
     public QuestionPoolDto findQuestionPoolById(Long id) {
@@ -37,12 +31,6 @@ public class QuestionsPoolRepository {
                 new Object[]{id},
                 new BeanPropertyRowMapper<>(QuestionPoolDto.class))
                 .stream().findAny().orElse(null);
-        if (questionPoolDto != null) {
-            String questionSql = "select * from question where question_pool_id =?";
-            questionPoolDto.setQuestion(jdbcTemplate.query(questionSql,
-                    new Object[]{questionPoolDto.getId()},
-                    new BeanPropertyRowMapper<>(QuestionDto.class)));
-        }
         return questionPoolDto;
     }
 
@@ -50,38 +38,16 @@ public class QuestionsPoolRepository {
         String sql = "insert into question_pool(description) values(?) returning id";
         questionPoolDto.setId(jdbcTemplate.queryForObject(sql,
                 new Object[]{questionPoolDto.getDescription()}, Long.class));
-        questionPoolDto.getQuestion().forEach(questionDto -> {
-            String sqlQuestion = "insert into question(answer_four, answer_one, answer_three, answer_two, question_name, true_question, question_pool_id) values(?,?,?,?,?,?,?) returning id";
-            questionDto.setId(jdbcTemplate.queryForObject(sqlQuestion,
-                    new Object[]{questionDto.getAnswerFour(), questionDto.getAnswerOne(),
-                            questionDto.getAnswerThree(),
-                            questionDto.getAnswerTwo(),
-                            questionDto.getQuestionName(),
-                            questionDto.getTrueQuestion(),
-                            questionPoolDto.getId()}, Long.class));
-        });
         return questionPoolDto;
     }
 
-    public void updateQuestionPool(QuestionPool questionPool) {
+    public void updateQuestionPool(QuestionPoolDto questionPool) {
         String sql = "update question_pool set id=?, description=? where id=?";
         jdbcTemplate.update(sql, questionPool.getId(), questionPool.getDescription(), questionPool.getId());
-        for (Question questionDto : questionPool.getQuestion()) {
-            String sqlQuestion = "update question set id=?,answer_one=?, answer_two=?, answer_three=?, answer_four=?, question_name=?, true_question=?, question_pool_id=? where id=?";
-            jdbcTemplate.update(sqlQuestion, questionDto.getId(), questionDto.getAnswerOne(), questionDto.getAnswerTwo(), questionDto.getAnswerThree(), questionDto.getAnswerFour(), questionDto.getQuestionName(), questionDto.getTrueQuestion(), questionPool.getId(), questionDto.getId());
-        }
     }
 
     public void deleteQuestionPoolById(Long id) {
-        QuestionPoolDto questionPoolDto = findQuestionPoolById(id);
-        if (questionPoolDto != null) {
-            if (questionPoolDto.getQuestion().size() != 0) {
-                for (QuestionDto question : questionPoolDto.getQuestion()) {
-                    jdbcTemplate.update("delete from answer_user where question_id=?",question.getId());
-                    jdbcTemplate.update("delete from question where question_pool_id=?", id);
-                }
-            }
-            jdbcTemplate.update("delete from question_pool where id=?", id);
-        }
+        String sql = "delete from question_pool where id=?";
+        jdbcTemplate.update(sql, id);
     }
 }

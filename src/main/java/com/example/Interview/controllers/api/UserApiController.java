@@ -5,6 +5,7 @@ import com.example.Interview.dao.UserDao;
 import com.example.Interview.model.Users;
 import com.example.Interview.service.Impl.UserServiceImpl;
 import com.example.Interview.utils.DtoConvert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserApiController {
+
     private final DtoConvert dtoConvert;
     private final UserServiceImpl userService;
 
+    @Autowired
     public UserApiController(DtoConvert dtoConvert, UserServiceImpl userService) {
         this.dtoConvert = dtoConvert;
         this.userService = userService;
