@@ -54,7 +54,7 @@ public class DefaultController {
     public String addQuestion(@PathVariable(value = "id") Long id, Model model) {
         QuestionPool questionPool = questionPoolService.getQuestionPoolById(id);
         Question question = new Question();
-//        question.setQuestionPoolId(questionPool.getId());
+        question.setQuestionPoolId(questionPool.getId());
         model.addAttribute("questionPool",questionPool);
         model.addAttribute("question", question);
 //        model.addAttribute("questionP", questionPoolService.getQuestionPoolById(id));
@@ -78,7 +78,7 @@ public class DefaultController {
     public String updateQuestion(@PathVariable(value = "id") Long id, Model model) {
         Question question = questionService.getQuestionById(id);
         QuestionPool questionPool = questionPoolService.getQuestionPoolById(question.getQuestionPoolId());
-        question.setQuestionPoolId(id);
+        question.setQuestionPoolId(questionPool.getId());
         model.addAttribute("questionPool",questionPool);
         model.addAttribute("question",question);
         return "updateQuestion";
@@ -86,6 +86,11 @@ public class DefaultController {
     @PostMapping("/updateQuestionId")
     public String updateQuestionId(Question question){
         questionService.update(question);
+        return "redirect:/index";
+    }
+    @GetMapping("/deleteQuestionPool/{id}")
+    public String deleteById(@PathVariable(value = "id") Long id){
+        questionPoolService.deleteQuestionPoolById(id);
         return "redirect:/index";
     }
 

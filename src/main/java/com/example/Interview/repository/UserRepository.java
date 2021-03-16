@@ -1,6 +1,7 @@
 package com.example.Interview.repository;
 
 import com.example.Interview.model.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class UserRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

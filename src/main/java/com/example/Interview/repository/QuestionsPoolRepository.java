@@ -4,6 +4,7 @@ import com.example.Interview.Dto.QuestionDto;
 import com.example.Interview.Dto.QuestionPoolDto;
 import com.example.Interview.model.Question;
 import com.example.Interview.model.QuestionPool;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.List;
 @Repository
 public class QuestionsPoolRepository {
     private final JdbcTemplate jdbcTemplate;
-
+    @Autowired
     public QuestionsPoolRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

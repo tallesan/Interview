@@ -23,7 +23,7 @@ public class Users {
     private String lastName;
     private String email;
     private String password;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<AnswerUser> answerUsers;
 
 }
