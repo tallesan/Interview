@@ -1,6 +1,5 @@
 package com.example.Interview.dao;
 
-import com.example.Interview.model.QuestionPool;
 import com.example.Interview.model.Users;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -13,7 +13,8 @@ public class StatisticService {
     public StatisticService(StatisticRepository statisticRepository) {
         this.statisticRepository = statisticRepository;
     }
-    public List<UserTestAnswer> statisticUser(Long id){
+
+    public List<UserTestAnswer> statisticUser(Long id) {
         return statisticRepository.statisticUserAnswers(id);
     }
 }

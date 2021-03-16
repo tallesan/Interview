@@ -1,12 +1,10 @@
 package com.example.Interview.controllers;
 
+import com.example.Interview.Dto.QuestionPoolDto;
 import com.example.Interview.dao.AnswersToQuestions;
 import com.example.Interview.dao.QuestionDao;
-import com.example.Interview.model.QuestionPool;
-import com.example.Interview.repository.AnswerUserRepository;
-import com.example.Interview.service.Impl.QuestionPoolServiceImpl;
-import com.example.Interview.service.Impl.QuestionServiceImpl;
-import com.example.Interview.service.Impl.UsersAnswerService;
+import com.example.Interview.service.Impl.*;
+import com.example.Interview.utils.DaoQuestionConvert;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,27 +16,28 @@ import java.util.List;
 
 @Controller
 public class UserTestingController {
-    private final QuestionPoolServiceImpl questionPoolService;
-    private final QuestionServiceImpl questionService;
+    private final QuestionServiceJdbc questionServiceJdbc;
+    private final QuestionPoolServiceJdbc questionPoolServiceJdbc;
     private final UsersAnswerService usersAnswerService;
+    private final DaoQuestionConvert questionConvert;
 
-    public UserTestingController(QuestionPoolServiceImpl questionPoolService, QuestionServiceImpl questionService, UsersAnswerService usersAnswerService) {
-        this.questionPoolService = questionPoolService;
-        this.questionService = questionService;
+    public UserTestingController(QuestionServiceJdbc questionServiceJdbc, QuestionPoolServiceJdbc questionPoolServiceJdbc, UsersAnswerService usersAnswerService, DaoQuestionConvert questionConvert) {
+        this.questionServiceJdbc = questionServiceJdbc;
+        this.questionPoolServiceJdbc = questionPoolServiceJdbc;
         this.usersAnswerService = usersAnswerService;
+        this.questionConvert = questionConvert;
     }
 
     @GetMapping("/test/take")
     public String testingUserIndex(Model model) {
-        List<QuestionPool> questionPools = questionPoolService.getAllQuestionPool();
+        List<QuestionPoolDto> questionPools = questionPoolServiceJdbc.findAllQuestionPool();
         model.addAttribute("questionPoolsList", questionPools);
         return "test/currentTests";
     }
 
     @GetMapping("/test/selectQuestion/{id}")
     public String selectQuestion(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        System.out.println(principal.getName());
-        List<QuestionDao> questionDaoList = questionService.convertQuestionDaoList(questionService.searchQuestion(id), principal.getName());
+        List<QuestionDao> questionDaoList = questionConvert.convertQuestionDaoList(questionServiceJdbc.findQuestionsDtoByQuestionPoolId(id), principal.getName());
         AnswersToQuestions answersToQuestions = new AnswersToQuestions();
         answersToQuestions.setAnswersToDao(questionDaoList);
         model.addAttribute("answersToQuestions", answersToQuestions);
