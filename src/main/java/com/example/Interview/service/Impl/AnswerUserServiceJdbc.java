@@ -14,9 +14,13 @@ public class AnswerUserServiceJdbc {
         this.answerUsersRepository = answerUsersRepository;
     }
 
-    public void deleteAnswerUserByQuestionId(List<QuestionDto> questionDtoList) {
+    public void deleteAnswerUserByQuestionIdList(List<QuestionDto> questionDtoList) {
         for (QuestionDto questionDto : questionDtoList) {
             answerUsersRepository.deleteAnswerUserByQuestionId(questionDto.getId());
         }
+    }
+
+    public void deleteAnswerUserByQuestionId(Long id) {
+        answerUsersRepository.deleteAnswerUserByQuestionId(id);
     }
 }

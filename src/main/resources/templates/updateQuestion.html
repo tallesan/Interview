@@ -16,7 +16,7 @@
     <hr>
 
     <form method="POST" th:action="@{/updateQuestionId}" th:object="${question}">
-        <input type="text" readonly th:field="*{questionPoolId}" th:value="${question.getQuestionPoolId()}"  class="form-control mb-4 col-4">
+        <input type="hidden" readonly th:field="*{questionPoolId}" th:value="${questionPool.id}"  class="form-control mb-4 col-4">
         <input type="hidden" th:field="*{id}" />
         <input type="text" th:field="*{questionName}" placeholder="Вопрос"  class="form-control mb-4 col-4">
         <input type="text" th:field="*{answerOne}" placeholder="Первый вариант" class="form-control mb-4 col-4">

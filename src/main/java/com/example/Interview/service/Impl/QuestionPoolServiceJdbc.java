@@ -1,12 +1,8 @@
 package com.example.Interview.service.Impl;
 
-import com.example.Interview.Dto.QuestionDto;
 import com.example.Interview.Dto.QuestionPoolDto;
-import com.example.Interview.model.Question;
 import com.example.Interview.model.QuestionPool;
 import com.example.Interview.repository.QuestionsPoolRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +50,7 @@ public class QuestionPoolServiceJdbc {
     public QuestionPoolDto createQuestionPool(QuestionPoolDto questionPoolDtoSave) {
         QuestionPoolDto questionPoolDto = questionsPoolRepository.createQuestionPool(questionPoolDtoSave);
         if (questionPoolDto.getQuestion() != null) {
-            questionPoolDto.setQuestion(questionServiceJdbc.saveQuestionDto(questionPoolDtoSave.getQuestion(), questionPoolDto.getId()));
+            questionPoolDto.setQuestion(questionServiceJdbc.saveQuestionDtoList(questionPoolDtoSave.getQuestion(), questionPoolDto.getId()));
         }
         return questionPoolDto;
     }
@@ -62,7 +58,7 @@ public class QuestionPoolServiceJdbc {
     public void updateQuestionPoll(QuestionPoolDto questionPoolDto) {
         questionsPoolRepository.updateQuestionPool(questionPoolDto);
         if (questionPoolDto.getQuestion() != null) {
-            questionServiceJdbc.updateQuestionDto(questionPoolDto.getQuestion());
+            questionServiceJdbc.updateQuestionDtoList(questionPoolDto.getQuestion());
         }
     }
 

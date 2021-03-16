@@ -24,6 +24,10 @@ public class QuestionServiceJdbc {
         return questionsRepository.findAllQuestionDtoByQuestionPoolId(id);
     }
 
+    public QuestionDto findQuestionById(Long id){
+        return questionsRepository.findQuestionById(id);
+    }
+
     /**
      * переделать
      */
@@ -31,12 +35,21 @@ public class QuestionServiceJdbc {
         String stringBuilder = questionDtoList.stream().map(questionDto -> "insert into question(answer_one, answer_two, answer_three, answer_four, question_name, true_question, question_pool_id) values(" + questionDto.getAnswerOne() + "," + questionDto.getAnswerTwo() + "," + questionDto.getAnswerThree() + "," + questionDto.getAnswerFour() + "," + questionDto.getQuestionName() + "," + questionDto.getTrueQuestion() + "," + questionPoolId + ")").collect(Collectors.joining());
     }
 
-    public List<QuestionDto> saveQuestionDto(List<QuestionDto> questionDtoList, Long questionPoolId) {
-        return questionsRepository.saveQuestion(questionDtoList, questionPoolId);
+    public List<QuestionDto> saveQuestionDtoList(List<QuestionDto> questionDtoList, Long questionPoolId) {
+        return questionsRepository.saveQuestionList(questionDtoList, questionPoolId);
     }
 
-    public void updateQuestionDto(List<QuestionDto> questionDtoList) {
-        questionsRepository.updateQuestion(questionDtoList);
+    public void saveQuestionDto(QuestionDto questionDto){
+        questionsRepository.saveQuestion(questionDto);
+    }
+
+    public void updateQuestionDtoList(List<QuestionDto> questionDtoList) {
+        questionsRepository.updateQuestionList(questionDtoList);
+    }
+
+    public void updateQuestionDto(QuestionDto questionDto){
+        questionsRepository.updateQuestion(questionDto);
+
     }
 
     public Question convertToQuestion(QuestionDto questionDto) {
@@ -58,8 +71,13 @@ public class QuestionServiceJdbc {
 
 
     public void deleteQuestionByQuestionPoolId(List<QuestionDto> questionDtoList, Long QuestionPoolId) {
-        answerUserService.deleteAnswerUserByQuestionId(questionDtoList);
+        answerUserService.deleteAnswerUserByQuestionIdList(questionDtoList);
         questionsRepository.deleteQuestionByQuestionPoolId(QuestionPoolId);
 
+    }
+
+    public void deleteQuestionById(Long id) {
+        answerUserService.deleteAnswerUserByQuestionId(id);
+        questionsRepository.deleteQuestionById(id);
     }
 }

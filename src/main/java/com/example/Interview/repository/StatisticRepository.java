@@ -9,6 +9,7 @@ import java.util.List;
 
 @Component
 public class StatisticRepository {
+
     private final JdbcTemplate jdbcTemplate;
 
     public StatisticRepository(JdbcTemplate jdbcTemplate) {
