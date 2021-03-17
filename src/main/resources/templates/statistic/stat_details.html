@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Списко опросов</title>
+    <title>Списко ответов</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -18,23 +18,19 @@
     <table border="1" class="table table-striped table-responsive-md">
         <thead>
         <tr>
-            <th>Количество вопросов</th>
-            <th>Правильные ответы</th>
-            <th>Уникальные правильные ответы</th>
-            <th>Пройденные темы</th>
-            <th>Всего тем</th>
-            <th>Действие</th>
-
+            <th>Тема опроса</th>
+            <th>Вопрос</th>
+            <th>Правильный ответ</th>
+            <th>Ваш ответ</th>
         </tr>
         </thead>
         <tbody>
-        <td th:text="${userPollResultDto.getAllAnswer()}"></td>
-        <td th:text="${userPollResultDto.getTrueAnswer()}"></td>
-        <td th:text="${userPollResultDto.getUniqueTrueAnswer()}"></td>
-        <td th:text="${userPollResultDto.getUniqueQuestionPoll()}"></td>
-        <td th:text="${userPollResultDto.getUniqueQuestionPoll()}"></td>
-        <td><a th:href="@{/detailsUserPoll/{id}(id=${users.id})}" class="btn btn-outline-success mb-1">Подробнее</a>
-        </td>
+        <tr th:each="userAnswer : ${userAnswerDetails}">
+            <td th:text="${userAnswer.getDescription()}"></td>
+            <td th:text="${userAnswer.getAnswerName()}"></td>
+            <td th:text="${userAnswer.getTrueAnswer()}"></td>
+            <td th:text="${userAnswer.getUserAnswer()}"></td>
+        </tr>
         </tbody>
     </table>
     <a th:href="@{/}">назад к списку</a>

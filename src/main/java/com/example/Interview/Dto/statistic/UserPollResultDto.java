@@ -1,4 +1,4 @@
-package com.example.Interview.Dto;
+package com.example.Interview.Dto.statistic;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
