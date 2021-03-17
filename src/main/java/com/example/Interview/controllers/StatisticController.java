@@ -22,7 +22,7 @@ public class StatisticController {
     @GetMapping("/statistic/user")
     public String initStatistic(Model model, Principal principal){
         Users users = userService.getUsersByEmail(principal.getName());
-        System.out.println(statisticService.statisticUser(users.getId()).size());
+        System.out.println(statisticService.findResultUser(principal.getName()));
         model.addAttribute("users",users);
         return "statistic/stat_index";
     }

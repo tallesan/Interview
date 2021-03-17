@@ -18,13 +18,13 @@ import java.util.List;
 public class UserTestingController {
     private final QuestionServiceJdbc questionServiceJdbc;
     private final QuestionPoolServiceJdbc questionPoolServiceJdbc;
-    private final UsersAnswerService usersAnswerService;
+    private final AnswerUserServiceJdbc answerUserServiceJdbc;
     private final DaoQuestionConvert questionConvert;
 
-    public UserTestingController(QuestionServiceJdbc questionServiceJdbc, QuestionPoolServiceJdbc questionPoolServiceJdbc, UsersAnswerService usersAnswerService, DaoQuestionConvert questionConvert) {
+    public UserTestingController(QuestionServiceJdbc questionServiceJdbc, QuestionPoolServiceJdbc questionPoolServiceJdbc, AnswerUserServiceJdbc answerUserServiceJdbc, DaoQuestionConvert questionConvert) {
         this.questionServiceJdbc = questionServiceJdbc;
         this.questionPoolServiceJdbc = questionPoolServiceJdbc;
-        this.usersAnswerService = usersAnswerService;
+        this.answerUserServiceJdbc = answerUserServiceJdbc;
         this.questionConvert = questionConvert;
     }
 
@@ -46,7 +46,7 @@ public class UserTestingController {
 
     @PostMapping("/test/userAnswer")
     public String userAnswer(AnswersToQuestions userAnswerDto) {
-        usersAnswerService.saveAnswer(userAnswerDto);
+        answerUserServiceJdbc.saveAnswerUser(userAnswerDto);
         return "redirect:/test/take";
     }
 }

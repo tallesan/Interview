@@ -13,6 +13,5 @@ public class QuestionPoolDto {
 
     private Long id;
     private String description;
-
     private List<QuestionDto> question;
 }
