@@ -36,7 +36,6 @@ public class StatisticController {
 
     @GetMapping("/statistic/detailsUserPoll/{userName}")
     public String detailUserAnswer(@PathVariable(value = "userName") String userName, Model model, Principal principal) {
-
         UserStatistic userStatistic = statisticService.findUserStatisticByUserName(principal.getName());
         if (!userName.equals(principal.getName())) return "redirect:/index";
         model.addAttribute("userStatistic", userStatistic);
@@ -47,14 +46,13 @@ public class StatisticController {
     public String statisticAllUser(Model model){
         SystemStatistic systemStatistic = statisticService.countSystemStatistic();
         model.addAttribute("systemStatistic", systemStatistic);
-
         return "statistic/sys_statistic";
     }
 
     @GetMapping("/statistic/systemStatistic/details")
     public String systemStatisticDetails(Model model){
-        List<StatisticUserDetailsPoll> statisticUserDetailsPoll = statisticService.getStatisticUserDetailsPoll();
-        System.out.println(statisticUserDetailsPoll);
-        return "redirect:/index";
+        List<StatisticUserDetailsPoll> statisticUserDetailsPollList = statisticService.getStatisticUserDetailsPoll();
+        model.addAttribute("statisticUserDetailsPollList",statisticUserDetailsPollList);
+        return "statistic/stat_UserDetail";
     }
 }
