@@ -2,6 +2,7 @@ package com.example.Interview.controllers;
 
 import com.example.Interview.Dto.statistic.UserAnswerDetail;
 import com.example.Interview.Dto.statistic.UserPollResultDto;
+import com.example.Interview.Dto.statistic.UserStatistic;
 import com.example.Interview.model.Users;
 import com.example.Interview.service.Impl.StatisticService;
 import com.example.Interview.service.Impl.UserServiceImpl;
@@ -32,15 +33,20 @@ public class StatisticController {
         return "statistic/stat_index";
     }
 
-    @GetMapping("/detailsUserPoll/{id}")
-    public String detailUserAnswer(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        List<UserAnswerDetail> userAnswerDetails = statisticService.findUserDetail(id);
-        Users users = userService.getUsersByEmail(principal.getName());
-        System.out.println(userAnswerDetails);
-        if (!users.getId().equals(id)) return "redirect:/index";
-        model.addAttribute("users", users);
-        model.addAttribute("userAnswerDetails", userAnswerDetails);
+    @GetMapping("/statistic/detailsUserPoll/{userName}")
+    public String detailUserAnswer(@PathVariable(value = "userName") String userName, Model model, Principal principal) {
+
+        UserStatistic userStatistic = statisticService.findUserStatisticByUserName(principal.getName());
+        System.out.println(userStatistic);
+        if (!userName.equals(principal.getName())) return "redirect:/index";
+        model.addAttribute("userStatistic", userStatistic);
+
         return "statistic/stat_details";
 
+    }
+    @GetMapping("statistic/allUser")
+    public String statisticAllUser(Model model){
+
+        return "statistic/stat_index";
     }
 }
