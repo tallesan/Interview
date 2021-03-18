@@ -1,6 +1,7 @@
 package com.example.Interview.controllers;
 
-import com.example.Interview.Dto.statistic.UserAnswerDetail;
+import com.example.Interview.Dto.statistic.StatisticUserDetailsPoll;
+import com.example.Interview.Dto.statistic.SystemStatistic;
 import com.example.Interview.Dto.statistic.UserPollResultDto;
 import com.example.Interview.Dto.statistic.UserStatistic;
 import com.example.Interview.model.Users;
@@ -37,16 +38,23 @@ public class StatisticController {
     public String detailUserAnswer(@PathVariable(value = "userName") String userName, Model model, Principal principal) {
 
         UserStatistic userStatistic = statisticService.findUserStatisticByUserName(principal.getName());
-        System.out.println(userStatistic);
         if (!userName.equals(principal.getName())) return "redirect:/index";
         model.addAttribute("userStatistic", userStatistic);
-
         return "statistic/stat_details";
 
     }
     @GetMapping("statistic/allUser")
     public String statisticAllUser(Model model){
+        SystemStatistic systemStatistic = statisticService.countSystemStatistic();
+        model.addAttribute("systemStatistic", systemStatistic);
 
-        return "statistic/stat_index";
+        return "statistic/sys_statistic";
+    }
+
+    @GetMapping("/statistic/systemStatistic/details")
+    public String systemStatisticDetails(Model model){
+        List<StatisticUserDetailsPoll> statisticUserDetailsPoll = statisticService.getStatisticUserDetailsPoll();
+        System.out.println(statisticUserDetailsPoll);
+        return "redirect:/index";
     }
 }

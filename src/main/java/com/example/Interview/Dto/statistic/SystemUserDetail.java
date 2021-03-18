@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserAnswerDetail {
-    private String description;
-    private String answerName;
-    private String trueAnswer;
-    private String userAnswer;
+public class SystemUserDetail {
+    private String email;
+    private Long trueAnswer;
 }
