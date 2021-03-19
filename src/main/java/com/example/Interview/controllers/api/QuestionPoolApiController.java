@@ -4,6 +4,7 @@ import com.example.Interview.Dto.QuestionPoolDto;
 import com.example.Interview.model.QuestionPool;
 import com.example.Interview.repository.QuestionsPoolRepository;
 import com.example.Interview.service.Impl.QuestionPoolServiceJdbc;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,17 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(value = "/api/questionPool")
 public class QuestionPoolApiController {
 
     private final QuestionsPoolRepository questionsPoolRepository;
     private final QuestionPoolServiceJdbc questionPoolServiceJdbc;
-
-    @Autowired
-    public QuestionPoolApiController(QuestionsPoolRepository questionsPoolRepository, QuestionPoolServiceJdbc questionPoolServiceJdbc) {
-        this.questionsPoolRepository = questionsPoolRepository;
-        this.questionPoolServiceJdbc = questionPoolServiceJdbc;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllQuestionPool() {
