@@ -1,7 +1,6 @@
 package com.example.Interview.service.Impl;
 
 import com.example.Interview.Dto.QuestionDto;
-import com.example.Interview.model.Question;
 import com.example.Interview.repository.QuestionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,22 +51,22 @@ public class QuestionServiceJdbc {
 
     }
 
-    public Question convertToQuestion(QuestionDto questionDto) {
-        Question question = new Question();
-        question.setId(questionDto.getId());
-        question.setQuestionName(questionDto.getQuestionName());
-        question.setAnswerOne(questionDto.getAnswerOne());
-        question.setAnswerTwo(questionDto.getAnswerTwo());
-        question.setAnswerThree(questionDto.getAnswerThree());
-        question.setAnswerFour(questionDto.getAnswerFour());
-        question.setTrueQuestion(questionDto.getTrueQuestion());
-        question.setQuestionPoolId(questionDto.getQuestionPoolId());
-        return question;
-    }
+//    public Question convertToQuestion(QuestionDto questionDto) {
+//        Question question = new Question();
+//        question.setId(questionDto.getId());
+//        question.setQuestionName(questionDto.getQuestionName());
+//        question.setAnswerOne(questionDto.getAnswerOne());
+//        question.setAnswerTwo(questionDto.getAnswerTwo());
+//        question.setAnswerThree(questionDto.getAnswerThree());
+//        question.setAnswerFour(questionDto.getAnswerFour());
+//        question.setTrueQuestion(questionDto.getTrueQuestion());
+//        question.setQuestionPoolId(questionDto.getQuestionPoolId());
+//        return question;
+//    }
 
-    public List<Question> convertListToQuestion(List<QuestionDto> questionDtoList) {
-        return questionDtoList.stream().map(this::convertToQuestion).collect(Collectors.toList());
-    }
+//    public List<Question> convertListToQuestion(List<QuestionDto> questionDtoList) {
+//        return questionDtoList.stream().map(this::convertToQuestion).collect(Collectors.toList());
+//    }
 
 
     public void deleteQuestionByQuestionPoolId(List<QuestionDto> questionDtoList, Long QuestionPoolId) {

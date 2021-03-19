@@ -1,7 +1,6 @@
 package com.example.Interview.service.Impl;
 
 import com.example.Interview.Dto.QuestionPoolDto;
-import com.example.Interview.model.QuestionPool;
 import com.example.Interview.repository.QuestionsPoolRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +17,19 @@ public class QuestionPoolServiceJdbc {
         this.questionServiceJdbc = questionServiceJdbc;
     }
 
-    public QuestionPool convertToQuestionPool(QuestionPoolDto questionPoolDto) {
-        QuestionPool questionPool = new QuestionPool();
-        questionPool.setId(questionPoolDto.getId());
-        questionPool.setDescription(questionPool.getDescription());
-        return questionPool;
-    }
-
-    public QuestionPoolDto convertToQuestionPoolDto(QuestionPool questionPool) {
-        QuestionPoolDto questionPoolDto = new QuestionPoolDto();
-        questionPoolDto.setId(questionPool.getId());
-        questionPoolDto.setDescription(questionPool.getDescription());
-        return questionPoolDto;
-    }
+//    public QuestionPool convertToQuestionPool(QuestionPoolDto questionPoolDto) {
+//        QuestionPool questionPool = new QuestionPool();
+//        questionPool.setId(questionPoolDto.getId());
+//        questionPool.setDescription(questionPool.getDescription());
+//        return questionPool;
+//    }
+//
+//    public QuestionPoolDto convertToQuestionPoolDto(QuestionPool questionPool) {
+//        QuestionPoolDto questionPoolDto = new QuestionPoolDto();
+//        questionPoolDto.setId(questionPool.getId());
+//        questionPoolDto.setDescription(questionPool.getDescription());
+//        return questionPoolDto;
+//    }
 
     public List<QuestionPoolDto> findAllQuestionPool() {
         List<QuestionPoolDto> questionPooDtoList = questionsPoolRepository.findAllQuestionPool();

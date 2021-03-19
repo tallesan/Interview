@@ -2,11 +2,9 @@ package com.example.Interview.utils;
 
 import com.example.Interview.Dto.QuestionDto;
 import com.example.Interview.dao.QuestionDao;
-import com.example.Interview.model.Question;
 import com.example.Interview.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

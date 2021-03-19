@@ -3,6 +3,8 @@ package com.example.Interview.dao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
